@@ -10,6 +10,9 @@
                 <i class="material-icons" @click="enterRoom()">done</i>
             </div>
         </div>
+        <div class="row">
+            <blockquote  v-if="msg.length > 0">{{msg}}</blockquote>
+        </div>
     </div>
 </template>
 <script>
@@ -19,18 +22,28 @@ export default {
     name:'Join',
     roomId:String,
     store:store,
+    msg:'',
     methods:{
         enterRoom(){
             console.log('Joining room');
             if(this.roomId != ''){
                 this.$store.commit('joinRoom',this.roomId)
-                this.$store.commit('setCompName','JoinedRoom')
             }else{
                 console.log('No room id');
             }
         }
     },created(){
         this.roomId = ''
+        this.msg = ''
+    },mounted(){
+        this.$store.state.socket.on('roomStatus',data=>{
+            console.log(data);
+            if(data.status == 'pass'){
+                this.$store.commit('setCompName','JoinedRoom')
+            }else if(data.status == 'fail'){
+                this.msg = data.msg
+            }
+        })
     }
 }
 </script>

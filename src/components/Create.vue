@@ -91,6 +91,10 @@ export default {
                 this.$store.commit('setCompName','CreatedRoom')
             }
         })
+        this.$store.state.socket.on('roomJoined',data=>{
+            console.log('Someone joined the room',data);
+            this.$store.commit('updateUsersInTheRoom')
+        })
     }
 }
 </script>

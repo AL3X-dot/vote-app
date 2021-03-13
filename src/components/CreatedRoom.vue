@@ -9,6 +9,11 @@
             </span>
         </div>
         <div class="row">
+            <blockquote id='bq'>
+                Users Joined : {{$store.state.usersInTheRoom}}
+            </blockquote>
+        </div>
+        <div class="row">
             <blockquote>
                 Votes Recieved : {{$store.state.votesRecieved}}
             </blockquote>

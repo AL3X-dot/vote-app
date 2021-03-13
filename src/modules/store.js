@@ -5,7 +5,9 @@ const store = createStore({
         compName:'Create',
         socket:{},
         roomId:'',
-        votesRecieved:0
+        votesRecieved:0,
+        usersInTheRoom:0,
+        mode:''
     },
     mutations:{
         setCompName(state,payload){
@@ -15,16 +17,21 @@ const store = createStore({
             state.socket = io.connect('localhost:3000',{transports:['websocket']})
         },
         createRoom(state,payload){
+            state.mode = 'creation'
             state.socket.emit('createRoom',payload)
         },
         setRoomId(state,payload){
             state.roomId = payload
         },
         joinRoom(state,payload){
+            state.mode = 'joining'
             state.socket.emit('joinRoom',payload)
         },
         endConnection(state){
             state.socket.disconnect()
+        },
+        updateUsersInTheRoom(state){
+            state.usersInTheRoom ++ 
         }
     },
     actions:{
