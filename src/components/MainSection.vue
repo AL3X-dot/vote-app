@@ -1,28 +1,19 @@
 <template>
     <div class="col blue-text flow-text text-darken-1">
-        <div class="row valign-wrapper" @click="create">
+        <div class="row valign-wrapper">
             <i class="material-icons ">add</i>
-            <span>Create a poll</span>
+            <router-link to="/create">Create a Poll</router-link>
         </div>
-        <div class="row valign-wrapper" @click="join">
+        <div class="row valign-wrapper">
             <i class="material-icons ">add_task</i>
-            <span>Join a poll</span>
+            <router-link to="/join">Join a Poll</router-link>
         </div>
     </div>
 </template>
 <script>
-import store from '../modules/store' 
 export default {
     name:'Main',
-    store:store,
-    methods:{
-        create(){
-            this.$store.commit('setCompName','Create')
-        },
-        join(){
-            this.$store.commit('setCompName','Join')
-        }
-    }
+
 }
 </script>
 <style scoped>

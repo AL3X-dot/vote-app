@@ -2,7 +2,6 @@ import {createStore} from 'vuex'
 import io from 'socket.io-client'
 const store = createStore({
     state:{
-        compName:'Create',
         socket:{},
         roomId:'',
         votesRecieved:0,
@@ -10,38 +9,30 @@ const store = createStore({
         mode:''
     },
     mutations:{
-        setCompName(state,payload){
-            state.compName = payload
-        },
-        establishConnection(state){
-            state.socket = io.connect('localhost:3000',{transports:['websocket']})
+        connectToServer(state){
+            state.socket = io("http://localhost:3000",{transports:['websocket']})
         },
         createRoom(state,payload){
-            state.mode = 'creation'
             state.socket.emit('createRoom',payload)
         },
         setRoomId(state,payload){
             state.roomId = payload
         },
         joinRoom(state,payload){
-            state.mode = 'joining'
             state.socket.emit('joinRoom',payload)
         },
         endConnection(state){
-            state.socket.disconnect()
+            state.socket.emit("endRoom")
         },
         updateUsersInTheRoom(state){
             state.usersInTheRoom ++ 
         }
     },
     actions:{
-        createRoom(context,data){
-            context.commit('createRoom',data)
-        }
     },
     getters:{
-        getCompName(state){
-            return state.compName
+        getSocket(state){
+            return state.socket
         }
     }
 })

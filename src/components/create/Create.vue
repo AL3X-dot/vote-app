@@ -26,16 +26,17 @@
                 </div>
             </div>
             <div class="row center">
-                <div v-if="checkOptions()" class="btn btn-flat blue darken-1 white-text" @click="createSocketConnection()">Submit</div>
+                <div v-if="checkOptions()" class="btn btn-flat blue darken-1 white-text" @click="createRoom()">Submit</div>
             </div>
         </div>
     </div>
 </template>
 <script>
-
-import store from '../modules/store'
+import store from '../../modules/store'
 export default {
     name:'Create',
+    store,
+    socket:{},
     data(){
         return {
             option:{
@@ -43,8 +44,6 @@ export default {
                 content:String,
             },
             options:[],
-            socket:{},
-            store:store,
             roomName:String
         }
     },
@@ -67,33 +66,20 @@ export default {
             }
             return false
         },
-        createSocketConnection(){
-            console.log('Creating room.');
-            this.$store.dispatch('createRoom',{
-                roomName:this.roomName,
-                options:this.options
-            })
+        createRoom(){
+            console.log('Creating room');
+            this.$store.commit('createRoom',this.options)
         }
     },
     created(){
         this.roomName=''
         this.option = ''
-        this.$store.commit('establishConnection')
-        // this.socket = io("localhost:3000",{transports:['websocket']})
     },
     mounted(){
-        // this.$store.state.socket.on('createdRoom',()=>console.log('Room created'))
+        this.$store.commit('connectToServer')
         this.$store.state.socket.on('createdRoom',data=>{
-            console.log(`Room is created`);
-            console.log(`Room ID = ${data.roomId} `);
             this.$store.commit('setRoomId',data.roomId)
-            if(data.roomId != '' || data.roomId != null){
-                this.$store.commit('setCompName','CreatedRoom')
-            }
-        })
-        this.$store.state.socket.on('roomJoined',data=>{
-            console.log('Someone joined the room',data);
-            this.$store.commit('updateUsersInTheRoom')
+            this.$router.push('/createdRoom')
         })
     }
 }

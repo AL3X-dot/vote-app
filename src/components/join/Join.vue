@@ -10,38 +10,39 @@
                 <i class="material-icons" @click="enterRoom()">done</i>
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <blockquote  v-if="msg.length > 0">{{msg}}</blockquote>
-        </div>
+        </div> -->
     </div>
 </template>
 <script>
-import store from '../modules/store'
-
+import store from '../../modules/store'
 export default {
     name:'Join',
     roomId:String,
     store:store,
-    msg:'',
+    created(){
+        this.roomId = ''
+    },
     methods:{
         enterRoom(){
-            console.log('Joining room');
-            if(this.roomId != ''){
+            if(this.checkRoomId()){
                 this.$store.commit('joinRoom',this.roomId)
-            }else{
-                console.log('No room id');
             }
+        },
+        checkRoomId(){
+            if(this.roomId == ''){
+                return false
+            }
+            return true
         }
-    },created(){
-        this.roomId = ''
-        this.msg = ''
-    },mounted(){
+    },
+    mounted(){
+        this.$store.commit('connectToServer')
         this.$store.state.socket.on('roomStatus',data=>{
             console.log(data);
             if(data.status == 'pass'){
-                this.$store.commit('setCompName','JoinedRoom')
-            }else if(data.status == 'fail'){
-                this.msg = data.msg
+                this.$router.push('/joinedRoom')
             }
         })
     }

@@ -24,7 +24,7 @@
     </div>
 </template>
 <script>
-import store from '../modules/store'
+import store from '../../modules/store'
 export default {
     name:'CreatedRoom',
     store:store,
@@ -33,9 +33,15 @@ export default {
     },
     methods:{
         endRoom(){
-            console.log('Disconnected');
+            console.log('Ending the room');
             this.$store.commit('endConnection')
         }  
+    },
+    mounted(){
+        this.$store.state.socket.on("results",data=>{
+            console.log(data);
+            this.$router.push('/results')
+        })
     }
 }
 </script>

@@ -6,7 +6,7 @@
     </div>
 </template>
 <script>
-import store from '../modules/store'
+import store from '../../modules/store'
 export default {
     name:'JoinedRoom',
     store:store,
