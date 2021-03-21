@@ -44,7 +44,8 @@ export default {
                 content:String,
             },
             options:[],
-            roomName:String
+            roomName:String,
+            count:[],
         }
     },
     methods:{
@@ -68,6 +69,14 @@ export default {
         },
         createRoom(){
             console.log('Creating room');
+            this.options.filter(x=>{
+                this.count.push({
+                    id:x.id,
+                    value:0,
+                })
+            })
+            this.$store.commit('updateOptions',this.options)
+            this.$store.commit('updateCount',this.count)
             this.$store.commit('createRoom',this.options)
         }
     },

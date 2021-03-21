@@ -16,17 +16,19 @@
     </div>
 </template>
 <script>
-import store from '../../modules/store'
+import store  from '../../modules/store'
 export default {
     name:'Join',
     roomId:String,
-    store:store,
+    store,
+    socket:{},
     created(){
         this.roomId = ''
     },
     methods:{
         enterRoom(){
             if(this.checkRoomId()){
+                this.$store.commit('setRoomId',this.roomId)
                 this.$store.commit('joinRoom',this.roomId)
             }
         },
@@ -39,8 +41,8 @@ export default {
     },
     mounted(){
         this.$store.commit('connectToServer')
-        this.$store.state.socket.on('roomStatus',data=>{
-            console.log(data);
+        this.socket = this.$store.getters.getSocket
+        this.socket.on('roomStatus',data=>{
             if(data.status == 'pass'){
                 this.$router.push('/joinedRoom')
             }

@@ -28,19 +28,57 @@ import store from '../../modules/store'
 export default {
     name:'CreatedRoom',
     store:store,
+    data(){
+        return {
+            options:[],
+            count:[],
+            result:[],
+        }
+    },
     created(){
         this.roomId = this.$store.state.roomId
+        this.socket = this.$store.getters.getSocket
+        this.options = this.$store.getters.getOptions
+        this.count = this.$store.getters.getCount
     },
     methods:{
         endRoom(){
             console.log('Ending the room');
+            this.generateResults()
+            this.$store.commit('updateResult',this.result)
+            this.$store.commit('updateCount',this.count)
             this.$store.commit('endConnection')
-        }  
+            this.$router.push('/results')
+        },
+        updateCount(id){
+            this.count = this.count.filter(x=>{
+                if(x.id == id){
+                    x.value ++
+                }
+                return x
+            })
+        },
+        generateResults(){
+            for(let i=0;i<this.options.length;i++){
+            let content = this.options.find(x=>x.id == i+1).content
+            let value = this.count.find(x=>x.id == i+1).value
+            this.result.push({
+                content:content,
+                value:value,
+            })
+        }
+        }
     },
     mounted(){
-        this.$store.state.socket.on("results",data=>{
-            console.log(data);
-            this.$router.push('/results')
+        this.socket.on('newVoter',data=>{
+            console.log(`New User joined ${data}`);
+            this.$store.commit('updateUsersInTheRoom')
+            this.socket.emit('sendData',data)
+        })
+
+        this.socket.on('voteResult',data=>{
+            this.$store.commit('updateVotesRecieved')
+            this.updateCount(data)
         })
     }
 }

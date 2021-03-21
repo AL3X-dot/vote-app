@@ -6,7 +6,9 @@ const store = createStore({
         roomId:'',
         votesRecieved:0,
         usersInTheRoom:0,
-        mode:''
+        options:[],
+        count:[],
+        result:[],
     },
     mutations:{
         connectToServer(state){
@@ -26,6 +28,19 @@ const store = createStore({
         },
         updateUsersInTheRoom(state){
             state.usersInTheRoom ++ 
+        },
+        updateVotesRecieved(state){
+            state.votesRecieved ++
+            console.log('New Vote Recieved');
+        },
+        updateOptions(state,payload){
+            state.options = payload
+        },
+        updateCount(state,payload){
+            state.count = payload
+        },
+        updateResult(state,payload){
+            state.result = payload
         }
     },
     actions:{
@@ -33,6 +48,18 @@ const store = createStore({
     getters:{
         getSocket(state){
             return state.socket
+        },
+        getRoomId(state){
+            return state.roomId
+        },
+        getOptions(state){
+            return state.options
+        },
+        getCount(state){
+            return state.count
+        },
+        getResult(state){
+            return state.result
         }
     }
 })
