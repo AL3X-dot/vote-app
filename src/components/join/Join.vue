@@ -1,18 +1,21 @@
 <template>
-    <div class="container">
-        <span><h5>Join a Poll</h5></span>
+    <div class="row center">
+        <router-link to="/create"><h4 class="blue-text text-lighten-1">Create a poll</h4></router-link>
+    </div>
+
+    <div class="col">
+        <div class="row flow-text center">
+            <h5>Join a room</h5>
+        </div>
         <div class="row valign-wrapper">
-            <div class="col l10 m10 input-field">
-                <label for="">Enter Room Id</label>
-                <input type="text" v-model="roomId">
+            <div class="col s7 offset-s2 input-field">
+                <label for="roomId">Enter room id</label>
+                <input type="text" name="roomId" id="roomId" v-model="roomId">
             </div>
-            <div class="col l1 m1">
-                <i class="material-icons" @click="enterRoom()">done</i>
+            <div class="col">
+                <i class="material-icons"  @click="enterRoom" @keypress.enter="enterRoom">done</i>
             </div>
         </div>
-        <!-- <div class="row">
-            <blockquote  v-if="msg.length > 0">{{msg}}</blockquote>
-        </div> -->
     </div>
 </template>
 <script>

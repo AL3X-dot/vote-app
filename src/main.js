@@ -1,11 +1,14 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import store from './modules/store'
-// import store2 from './modules/store2'
 import router from './modules/vueRouter'
+import VueClipboard from 'vue3-clipboard'
 
 const app = createApp(App)
 app.use(store)
-// app.use(store2)
+app.use(VueClipboard,{
+  autoSetContainer: true,
+  appendToBody: true,
+})
 app.use(router)
 app.mount('#app')

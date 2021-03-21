@@ -1,14 +1,16 @@
 <template>
-    <div class="col blue-text flow-text text-darken-1">
-        <div class="row valign-wrapper">
-            <i class="material-icons ">add</i>
-            <router-link to="/create">Create a Poll</router-link>
+        <div class="col l12 m12 s12">
+            <div class="row center">
+                <router-link to="/create">
+                    <h4>Create a poll</h4>
+                </router-link>
+            </div>
+            <div class="row center">
+                <router-link to="/join">
+                    <h4>Join a poll</h4>
+                </router-link>
+            </div>
         </div>
-        <div class="row valign-wrapper">
-            <i class="material-icons ">add_task</i>
-            <router-link to="/join">Join a Poll</router-link>
-        </div>
-    </div>
 </template>
 <script>
 export default {
@@ -17,10 +19,5 @@ export default {
 }
 </script>
 <style scoped>
-    .material-icons{
-        margin:0 20px;
-    }
-    .row{
-        cursor: pointer;
-    }
+    
 </style>

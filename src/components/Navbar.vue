@@ -1,7 +1,7 @@
 <template>
     <nav>
         <div class="nav-wrapper grey darken-1 z-depth-2 valign-wrapper">
-            <a href="#" class="brand-logo center"><i class="material-icons">local_fire_department</i>Pollitout</a>
+            <router-link to="/" class="brand-logo center"><i class="material-icons">local_fire_department</i>Pollitout</router-link>
         </div>
     </nav>
 </template>
@@ -11,4 +11,7 @@ export default {
 }
 </script>
 <style scoped>
+    nav{
+        width:100%;
+    }
 </style>

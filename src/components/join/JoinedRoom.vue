@@ -1,7 +1,10 @@
 <template>
     <div class="container">
-        <div class="row">
-            <span><h4>Joined Room Anonymous</h4></span>
+        <div class="row flow-text">
+            <span><h4>Room Details</h4></span>
+        </div>
+        <div class="row flow-text">
+            <span><h6>Choose any 1</h6></span>
         </div>
         <div v-if="options.length > 0">
             <div class="row myCol" v-for="option in  options" :key="option.id" @click="selectOption(option)">
@@ -10,9 +13,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="row center" v-if="clicked">
-            <button class="btn btn-flat teal lighten-2 black-text">Submit</button>
-        </div> -->
     </div>
 </template>
 <script>
@@ -27,7 +27,7 @@ export default {
             this.clicked = true
             console.log(option.content);
             this.socket.emit('voted',option)
-            this.$router.push('/results')
+            this.$router.push('/')
         }
     },
     data(){
@@ -49,13 +49,12 @@ export default {
 </script>
 <style scoped>
     .myCol{
-        border:2px solid rgb(117, 117, 245);
-        border-radius: 20px;
+        border:2px solid lightblue;
     }
 
     .myCol:hover{
         cursor: pointer;
-        border:2px solid rgb(29, 241, 29);
+        border:2px solid green;
         box-shadow: 0 0 0 0 2px grey;
     }
     .clicked{

@@ -1,36 +1,39 @@
-import { createRouter,createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Create from '../components/create/Create'
 import CreatedRoom from '../components/create/CreatedRoom'
 import Join from '../components/join/Join'
 import JoinedRoom from '../components/join/JoinedRoom'
 import Results from '../components/Results'
-
-const routes = [
-    {
-        path:'/create',
-        component:Create
+import MainSection from '../components/MainSection'
+const routes = [{
+        path: '/',
+        component: MainSection
     },
     {
-        path:'/createdRoom',
-        component:CreatedRoom,
+        path: '/create',
+        component: Create
     },
     {
-        path:'/join',
-        component:Join
+        path: '/createdRoom',
+        component: CreatedRoom,
     },
     {
-        path:'/joinedRoom',
-        component:JoinedRoom
+        path: '/join',
+        component: Join
     },
     {
-        path:'/results',
-        component:Results
+        path: '/joinedRoom',
+        component: JoinedRoom
+    },
+    {
+        path: '/results',
+        component: Results
     },
 ]
 
 const router = createRouter({
-    history:createWebHistory(),
-    routes:routes,
+    history: createWebHistory(),
+    routes: routes,
 })
 
 export default router

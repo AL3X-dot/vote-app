@@ -1,30 +1,43 @@
 <template>
     <div class="container">
         <div class="row">
-            <span><h4>Room is created</h4></span>
+            <h4>Room Details</h4>
         </div>
-        <div class="row">
-            <span>
-                <h6>RoomId is : {{roomId}}</h6>
-            </span>
+        <div class="row rId flow-text">
+            <div class="col">
+                Room ID :
+            </div>
+            <div class="col blue-text">
+                {{roomId}}
+            </div>
+            <div class="col right">
+                <i class="material-icons" @click="copyText">content_copy</i>
+            </div>
         </div>
-        <div class="row">
-            <blockquote id='bq'>
-                Users Joined : {{$store.state.usersInTheRoom}}
-            </blockquote>
+        <div class="row myRow">
+            <div class="col">
+                <h5>Users Joined</h5>
+            </div>
+            <div class="col right">
+                <h5>{{$store.state.usersInTheRoom}}</h5>
+            </div>
         </div>
-        <div class="row">
-            <blockquote>
-                Votes Recieved : {{$store.state.votesRecieved}}
-            </blockquote>
+        <div class="row myRow">
+            <div class="col">
+                <h5>Votes Recieved</h5>
+            </div>
+            <div class="col right">
+                <h5>{{$store.state.votesRecieved}}</h5>
+            </div>
         </div>
-        <div class="row">
+        <div class="row center">
             <div class="btn btn-flat blue darken-1 white-text" @click="endRoom()">End Room</div>
         </div>
     </div>
 </template>
 <script>
 import store from '../../modules/store'
+import { copyText } from 'vue3-clipboard'
 export default {
     name:'CreatedRoom',
     store:store,
@@ -60,13 +73,18 @@ export default {
         },
         generateResults(){
             for(let i=0;i<this.options.length;i++){
-            let content = this.options.find(x=>x.id == i+1).content
-            let value = this.count.find(x=>x.id == i+1).value
-            this.result.push({
-                content:content,
-                value:value,
+                let content = this.options.find(x=>x.id == i+1).content
+                let value = this.count.find(x=>x.id == i+1).value
+                this.result.push({
+                    content:content,
+                    value:value,
+                })
+            }
+        },
+        copyText(){
+            copyText(this.roomId,undefined,()=>{
+                alert('Copied to clipboard')
             })
-        }
         }
     },
     mounted(){
@@ -84,5 +102,16 @@ export default {
 }
 </script>
 <style scoped>
-    
+    blockquote{
+        border-left: 5px solid rgb(81, 183, 241);
+    }
+    .rId{
+        border:2px solid grey
+    }
+    .myRow{
+        border-bottom: 3px solid lightblue;
+    }
+    .material-icons{
+        cursor: pointer;
+    }
 </style>
