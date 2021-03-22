@@ -12,7 +12,7 @@ const store = createStore({
     },
     mutations:{
         connectToServer(state){
-            state.socket = io("http://localhost:3000",{transports:['websocket']})
+            state.socket = io("https://vue-express-server.herokuapp.com/",{transports:['websocket']})
         },
         createRoom(state,payload){
             state.socket.emit('createRoom',payload)
